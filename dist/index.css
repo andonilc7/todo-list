@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 68px 1fr;
+}
+
+.header {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.83);
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  color: rgb(244, 244, 244)
+}
+
+.content {
+  display: grid;
+  grid-template-columns: min(250px, 30%) 1fr;
+
+}
+
+
+
+/* sidebar */
+.sidebar {
+  padding-left: 20px;
+  padding-right: 30px;
+  padding-top: 20px;
+  background-color: rgba(73, 73, 73, 0.83);
+}
+
+.project-item {
+  border: 1px solid black;
+}
+
+.project-name {
+  padding-left: 15px;
+}
+
+/* project display tasks */
+
+.project-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-item {
+  display: flex;
+  border: 1px solid black;
+  margin: 5px 10px;
+  padding: 5px;
+  align-items: center;
+}
+
+.task-item > * {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.task-title {
+  margin-right: auto;
+}
+
+.complete {
+  color: grey;
+  text-decoration: line-through;
+}
+
+
+/* details popup */
+.details-popup {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+  width: 50%;
+  padding: 30px 70px;
+  border: 1px solid black;
+  background: beige;
+}
+
+.close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+  /* disables clicks outside of popup */
+body.popup *:not(.details-popup, .details-popup *) {
+  pointer-events: none;
+  filter: blur(5px);
+}
+
+
