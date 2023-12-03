@@ -80,8 +80,8 @@ body {
 }
 
 
-/* details popup */
-.details-popup {
+/* details and edit popup */
+.popup-element {
   position: fixed;
   top: 35%;
   left: 50%;
@@ -99,7 +99,7 @@ body {
 }
 
   /* disables clicks outside of popup */
-body.popup *:not(.details-popup, .details-popup *) {
+body.popup *:not(.popup-element, .popup-element *) {
   pointer-events: none;
   filter: blur(5px);
 }
