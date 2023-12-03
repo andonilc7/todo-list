@@ -185,7 +185,14 @@ const pageLoad = function () {
     const submitEditForm = document.createElement('input')
     submitEditForm.type='submit'
     submitEditForm.value = "Confirm Edit"
+    submitEditForm.classList.add('submit-edit-form')
+    editForm.addEventListener(('submit'), (event) => {
+      event.preventDefault();
+    })
     editForm.append(submitEditForm)
+
+
+
 
     
 
@@ -198,6 +205,7 @@ const pageLoad = function () {
         body.classList.remove('popup')
         const priorityRadios = document.querySelectorAll('.edit-radio');
         
+        //reset values
         titleEdit.value = ""
         descriptionEdit.value = ""
         dueDateEdit.value = dueDateEdit.defaultValue;
@@ -226,9 +234,20 @@ const pageLoad = function () {
   const projectDisplay = document.createElement('div');
   projectDisplay.classList.add('project-display');
   content.append(projectDisplay);
+  
+  const taskDisplay = document.createElement('div');
+  taskDisplay.classList.add('task-display');
+  projectDisplay.append(taskDisplay);
+
+  const taskAddContainer = document.createElement('div');
+  taskAddContainer.classList.add('task-add-container');
+  projectDisplay.append(taskAddContainer)
+  const taskAddButton = document.createElement('button');
+  taskAddButton.classList.add('task-add-button');
+  taskAddButton.textContent = "Add Task"
+  taskAddContainer.append(taskAddButton)
 
   renderTasks(currentProject)
-  editTasks(currentProject)
   
 
 }

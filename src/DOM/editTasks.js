@@ -14,33 +14,32 @@ function editTasks(project) {
   const descriptionEdit = document.querySelector('.description-edit')
   const dueDateEdit = document.querySelector('.due-date-edit')
   const priorityRadios = document.querySelectorAll('.edit-radio')
+  const submitEditForm = document.querySelector('.submit-edit-form')
 
   function getTask(index) {
     return project.tasks[index];
   }
 
-  editForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    console.log(`edit form: ${activeTaskItem.getAttribute('data-index')}`)
-    
+
+  function submitEditFormClick(event) {
     project.tasks[activeTaskItem.getAttribute('data-index')].setTitle(titleEdit.value)
     project.tasks[activeTaskItem.getAttribute('data-index')].setDescription(descriptionEdit.value)
     project.tasks[activeTaskItem.getAttribute('data-index')].setDueDate(dueDateEdit.value);
+
+    priorityRadios.forEach((radio) => {
+      if (radio.checked === true) {
+        project.tasks[activeTaskItem.getAttribute('data-index')].setPriority(radio.value);
+      }
+    })
+
     renderTasks(project);
-    // prob should do a edit task-item function instead of 
-    //rendering all the tasks
+ 
     editPopup.style.visibility = "hidden";
     body.classList.remove('popup');
-    console.log(app.projects[0].tasks)
-       
-  })
-    }
+  }
 
-//problem is that when this runs, only does it once so when theres a enw activeTask Index,
-// it doesn't update that one. Maybe change event to 'click'????
-
-    
-    
+  submitEditForm.onclick = submitEditFormClick;
+}
       
 
   

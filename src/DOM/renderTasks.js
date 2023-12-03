@@ -3,12 +3,16 @@ import { editTasks } from "./editTasks";
 import Task from "../tasks";
 import Project from "../projects";
 import elementFromHtml from "./elementFromHtml";
+import { handleAddTask } from "./handleAddTask";
 
 let activeTaskItem;
 function renderTasks(project) {
   const body = document.querySelector('body');
   const projectDisplay = document.querySelector('.project-display');
-  projectDisplay.textContent = "";
+  const taskDisplay = document.querySelector('.task-display')
+  taskDisplay.textContent = "";
+  const taskAddButton = document.querySelector('.task-add-button')
+
 
   const detailsPopup = document.querySelector('.details-popup')
   const detailsPopupTitle = document.querySelector('.details-popup-title')
@@ -22,9 +26,11 @@ function renderTasks(project) {
   const dueDateEdit = document.querySelector('.due-date-edit')
   const priorityRadios = document.querySelectorAll('.edit-radio')
   const editForm = document.querySelector('.edit-form')
-  
+  const submitEditForm = document.querySelector('.submit-edit-form')
+  submitEditForm.onclick = null;
 
   console.log(`${project.tasks[0]}`)
+
 
   let index = 0;
   project.tasks.forEach((task) => {
@@ -32,7 +38,7 @@ function renderTasks(project) {
     taskItem.classList.add('task-item');
     taskItem.setAttribute('data-index', index);
     index++;
-    projectDisplay.append(taskItem)
+    taskDisplay.append(taskItem)
     
     const complete = document.createElement('input');
     complete.type = "checkbox";
@@ -81,6 +87,7 @@ function renderTasks(project) {
     taskItem.append(edit);
 
     edit.addEventListener('click', (e) => {
+      submitEditForm.value = 'Confirm Edit'
       editPopup.style.visibility = "visible";
       body.classList.add("popup");
       activeTaskItem = e.target.parentElement;
@@ -115,7 +122,22 @@ function renderTasks(project) {
     taskItem.append(deleteTask);
 
     
+  });
+
+  taskAddButton.addEventListener('click', (e) => {
+    submitEditForm.value = 'Add Task';
+
+    titleEdit.value = ""
+    descriptionEdit.value = ""
+    dueDateEdit.value = dueDateEdit.defaultValue
+    priorityRadios.forEach((radio) => {
+      radio.checked = false;
+    })
+    editPopup.style.visibility = "visible";
+    body.classList.add("popup");
+    handleAddTask(project);
   })
+
 }
 
 
