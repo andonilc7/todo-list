@@ -118,6 +118,10 @@ button:hover {
   top: 5px;
 }
 
+.close:hover {
+  cursor: pointer;
+}
+
   /* disables clicks outside of popup */
 body.popup *:not(.popup-element, .popup-element *) {
   pointer-events: none;

@@ -101,9 +101,10 @@ console.log(projectItemIndex)
     detailsPopup.append(detailsPopupPriority)
     
     //close details popup
-      const closeDetails = document.createElement('button');
+      const closeDetails = document.createElement('img');
       closeDetails.classList.add('close')
-      closeDetails.textContent = "x";
+      closeDetails.style.width = "20px"
+      closeDetails.src = closeSvg;
       closeDetails.addEventListener('click', () => {
         detailsPopup.style.visibility = "hidden";
         body.classList.remove('popup')
@@ -286,9 +287,11 @@ console.log(projectItemIndex)
     
 
     //close edit popup
-    const closeEdit = document.createElement('button');
+    const closeEdit = document.createElement('img');
       closeEdit.classList.add('close')
-      closeEdit.textContent = "x";
+      closeEdit.style.width = "20px"
+      closeEdit.src = closeSvg;
+
       closeEdit.addEventListener('click', () => {
         editPopup.style.visibility = "hidden";
         body.classList.remove('popup')
