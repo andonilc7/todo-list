@@ -3,11 +3,14 @@ import { renderTasks, renderTaskss } from "./renderTasks";
 import { app } from "../app";
 import { editTasks } from "./editTasks";
 import elementFromHtml from "./elementFromHtml";
+import closeSvg from '../assets/window-close.svg'
 
 const body = document.querySelector('body');
 
 
 const pageLoad = function () {
+
+  body.textContent = ''
   //load header
     const header = document.createElement('div');
     header.classList.add('header')
@@ -31,18 +34,49 @@ const pageLoad = function () {
   projectList.classList.add('project-list');
   sidebar.append(projectList);
 
+  let projectItemIndex=0;
   app.projects.forEach((project) => {
     
     const projectItem = document.createElement('div');
     projectItem.classList.add('project-item');
+    projectItem.setAttribute('data-index', projectItemIndex);
     projectList.append(projectItem);
+    projectItem.addEventListener('click', () => {
+      renderTasks(app.projects[projectItem.getAttribute('data-index')])
+    })
 
     const projectName = document.createElement('h3');
     projectName.classList.add('project-name')
     projectName.textContent = project.name;
-    
     projectItem.append(projectName);
+
+    const deleteProjectBtn = document.createElement('img')
+    deleteProjectBtn.src = closeSvg;
+    deleteProjectBtn.classList.add('delete-project-btn')
+    projectItem.append(deleteProjectBtn)
+    
+    deleteProjectBtn.addEventListener('click', (e) => {
+      app.projects.splice(projectItem.getAttribute('data-index'), 1)
+      console.log(app.projects)
+      pageLoad();
+    })
+    projectItemIndex++;
+
     });
+console.log(projectItemIndex)
+     // add project button
+     const addProjectBtn = document.createElement('button')
+     addProjectBtn.classList.add('add-project-btn')
+     addProjectBtn.textContent= 'Add Project' 
+     sidebar.append(addProjectBtn)
+ 
+     addProjectBtn.addEventListener('click', (e, popup) => {
+      addProjectPopup.style.visibility = "visible";
+      body.classList.add("popup");
+     })
+
+   
+
 
     //details popup
     const detailsPopup = document.createElement('div');
@@ -83,6 +117,61 @@ const pageLoad = function () {
       detailsPopup.style.visibility = "hidden";
    
   
+
+    
+ 
+     //add-project popup
+     const addProjectPopup = document.createElement('div');
+     addProjectPopup.classList.add('popup-element')
+     addProjectPopup.classList.add('add-project-popup')
+     body.append(addProjectPopup)
+     addProjectPopup.style.visibility = "hidden"
+ 
+     const addProjectForm = document.createElement('form')
+     addProjectForm.classList.add('add-project-form')
+     addProjectPopup.append(addProjectForm)
+
+     //project name container
+     const newProjectNameContainer = document.createElement('div')
+     addProjectForm.append(newProjectNameContainer)
+     const projectNameLabel = document.createElement('label')
+     projectNameLabel.textContent = 'Project Name: '
+     newProjectNameContainer.append(projectNameLabel)
+
+     const projectNameInput = document.createElement('input')
+     projectNameInput.classList.add('project-name-input')
+     newProjectNameContainer.append(projectNameInput)
+
+    //submit new project name
+    const submitAddProjectForm = document.createElement('input')
+    submitAddProjectForm.type = "submit"
+    submitAddProjectForm.value = "Confirm"
+    addProjectForm.append(submitAddProjectForm)
+    addProjectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      app.addProject(projectNameInput.value)
+      console.log(app.projects)
+      projectNameInput.value = ''
+    addProjectPopup.style.visibility = "hidden";
+    body.classList.remove('popup')
+
+      pageLoad();
+    })
+
+  //close project popup
+  const closeProjectPopup = document.createElement('img')
+  closeProjectPopup.src = closeSvg;
+  closeProjectPopup.style.width = "20px"
+  addProjectPopup.append(closeProjectPopup)
+  closeProjectPopup.classList.add('close')
+
+  closeProjectPopup.addEventListener('click', () => {
+    projectNameInput.value = ''
+    addProjectPopup.style.visibility = "hidden";
+    body.classList.remove('popup')
+
+  })
+
   //edit popup
   const editPopup = document.createElement('div');
     editPopup.classList.add('popup-element')

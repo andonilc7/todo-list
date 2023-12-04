@@ -2,10 +2,12 @@ import { app } from "../app";
 import { editTasks } from "./editTasks";
 import Task from "../tasks";
 import Project from "../projects";
-import elementFromHtml from "./elementFromHtml";
+import { deleteTask } from "./deleteTask";
 import { handleAddTask } from "./handleAddTask";
+import closeSvg from '../assets/window-close.svg'
 
 let activeTaskItem;
+let taskToDelete;
 function renderTasks(project) {
   const body = document.querySelector('body');
   const projectDisplay = document.querySelector('.project-display');
@@ -117,9 +119,15 @@ function renderTasks(project) {
 
 
     
-    const deleteTask = document.createElement('button');
-    deleteTask.textContent = "Delete";
-    taskItem.append(deleteTask);
+    const deleteTaskButton = document.createElement('img');
+    deleteTaskButton.src = closeSvg
+    deleteTaskButton.classList.add('delete-task-btn')
+    taskItem.append(deleteTaskButton);
+
+    deleteTaskButton.addEventListener('click', (e) => {
+      taskToDelete = e.target.parentElement;
+      deleteTask(project);
+    })
 
     
   });
@@ -142,4 +150,4 @@ function renderTasks(project) {
 
 
 
-export {renderTasks, activeTaskItem}
+export {renderTasks, activeTaskItem, taskToDelete}

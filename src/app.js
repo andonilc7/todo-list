@@ -2,6 +2,7 @@ import Task from "./tasks";
 import Project from "./projects";
 
 const home = new Project('Home');
+const work = new Project('Work')
 
 home.createAddTask("Trash", "Take out trash", "2023-12-02", "medium");
 console.log(home.tasks[0])
