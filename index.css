@@ -1,3 +1,5 @@
+
+
 * {
   margin: 0;
   padding: 0;
@@ -32,7 +34,9 @@ body {
 
 }
 
-
+button:hover {
+  cursor: pointer;
+}
 
 /* sidebar */
 .sidebar {
@@ -44,10 +48,18 @@ body {
 
 .project-item {
   border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 1px;
 }
 
-.project-name {
-  padding-left: 15px;
+.project-item:hover {
+  cursor: pointer;
+}
+
+.add-project-btn:hover {
+  cursor: pointer;
 }
 
 /* project display tasks */
@@ -77,6 +89,14 @@ body {
 .complete {
   color: grey;
   text-decoration: line-through;
+}
+
+.delete-task-btn {
+  width: 20px;
+}
+
+.delete-task-btn:hover {
+  cursor: pointer;
 }
 
 
