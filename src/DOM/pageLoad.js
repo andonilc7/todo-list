@@ -58,7 +58,9 @@ const pageLoad = function () {
     deleteProjectBtn.addEventListener('click', (e) => {
       app.projects.splice(projectItem.getAttribute('data-index'), 1)
       console.log(app.projects)
+      localStorage.setItem('storedProjects', JSON.stringify(app.projects));
       pageLoad();
+      renderTasks(app.projects[0]);
     })
     projectItemIndex++;
 
@@ -71,6 +73,7 @@ console.log(projectItemIndex)
      sidebar.append(addProjectBtn)
  
      addProjectBtn.addEventListener('click', (e, popup) => {
+      localStorage.setItem('storedProjects', JSON.stringify(app.projects));
       addProjectPopup.style.visibility = "visible";
       body.classList.add("popup");
      })
@@ -151,6 +154,7 @@ console.log(projectItemIndex)
     addProjectForm.addEventListener('submit', (e) => {
       e.preventDefault();
       app.addProject(projectNameInput.value)
+      localStorage.setItem('storedProjects', JSON.stringify(app.projects));
       console.log(app.projects)
       projectNameInput.value = ''
     addProjectPopup.style.visibility = "hidden";
@@ -193,6 +197,7 @@ console.log(projectItemIndex)
 
     const titleEdit = document.createElement('textarea');
     titleEdit.classList.add('title-edit')
+    titleEdit.required = true;
     
     titleEditContainer.append(titleEdit)
 
@@ -220,13 +225,14 @@ console.log(projectItemIndex)
     const dueDateEdit = document.createElement('input');
     dueDateEdit.classList.add('due-date-edit')
     dueDateEdit.type='date';
+    dueDateEdit.required = true;
     dueEditCont.append(dueDateEdit);
 
 
     // priority edit container
     const priorityEditContainer = document.createElement('div');
     editForm.append(priorityEditContainer);
-
+    priorityEditContainer.required = true;
     const priorityLabel = document.createElement('div');
     priorityLabel.textContent = 'Priority: '
     priorityEditContainer.append(priorityLabel);
@@ -314,6 +320,7 @@ console.log(projectItemIndex)
 
   let currentProject = app.projects[0];
 
+
   function changeCurrentProject(newProj) {
     currentProject = newProj;
   }
@@ -327,6 +334,10 @@ console.log(projectItemIndex)
   projectDisplay.classList.add('project-display');
   content.append(projectDisplay);
   
+  const projectDisplayTitle = document.createElement('div');
+  projectDisplayTitle.classList.add('project-display-title');
+  projectDisplay.append(projectDisplayTitle);
+
   const taskDisplay = document.createElement('div');
   taskDisplay.classList.add('task-display');
   projectDisplay.append(taskDisplay);

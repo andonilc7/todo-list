@@ -27,14 +27,18 @@ function handleAddTask(project) {
     return priorityValue;
   }
 
-
   function submitAddFormClick() {
-    project.createAddTask(titleEdit.value, descriptionEdit.value, dueDateEdit.value, getFormPriority());
-    renderTasks(project)
+    if (titleEdit.value.length > 0 && dueDateEdit.value.length == 10 && getFormPriority !== undefined){
+      project.createAddTask(titleEdit.value, descriptionEdit.value, new Date(dueDateEdit.value), getFormPriority());
 
-    editPopup.style.visibility = "hidden";
-    body.classList.remove('popup');
-    console.log(project.tasks)
+      localStorage.setItem('storedProjects', JSON.stringify(app.projects));
+      renderTasks(project)
+  
+      editPopup.style.visibility = "hidden";
+      body.classList.remove('popup');
+      console.log(project.tasks)
+    }
+    
   }
 
   submitEditForm.onclick = submitAddFormClick;

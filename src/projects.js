@@ -1,4 +1,6 @@
 import Task from "./tasks";
+import {compareAsc} from "date-fns";
+import { app } from "./app";
 
 export default class Project {
   constructor(name) {
@@ -8,6 +10,7 @@ export default class Project {
 
   createAddTask(title, description, dueDate, priority) {
     this.tasks.push(new Task(title, description, dueDate, priority));
+
   }
 
   getTasks() {

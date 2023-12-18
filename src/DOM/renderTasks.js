@@ -5,12 +5,18 @@ import Project from "../projects";
 import { deleteTask } from "./deleteTask";
 import { handleAddTask } from "./handleAddTask";
 import closeSvg from '../assets/window-close.svg'
+import { format } from "date-fns";
 
 let activeTaskItem;
 let taskToDelete;
 function renderTasks(project) {
+  //for when delete a project, defaults to showing home project
+  if (project == undefined) {
+    project = app.projects[0];
+  }
   const body = document.querySelector('body');
   const projectDisplay = document.querySelector('.project-display');
+  const projectDisplayTitle = document.querySelector('.project-display-title')
   const taskDisplay = document.querySelector('.task-display')
   taskDisplay.textContent = "";
   const taskAddButton = document.querySelector('.task-add-button')
@@ -31,8 +37,7 @@ function renderTasks(project) {
   const submitEditForm = document.querySelector('.submit-edit-form')
   submitEditForm.onclick = null;
 
-  console.log(`${project.tasks[0]}`)
-
+  projectDisplayTitle.textContent = project.name;
 
   let index = 0;
   project.tasks.forEach((task) => {
@@ -44,6 +49,7 @@ function renderTasks(project) {
     
     const complete = document.createElement('input');
     complete.type = "checkbox";
+    complete.classList.add('complete-task-checkbox')
     taskItem.append(complete);
     complete.addEventListener('change', function() {
       task.toggleComplete();
@@ -65,7 +71,9 @@ function renderTasks(project) {
       details.addEventListener('click', function(e) {
         detailsPopupTitle.textContent = `${task.getTitle()}`
         detailsPopupDescription.textContent = `Description: ${task.getDescription()}`
-        detailsPopupDueDate.textContent = `Due Date: ${task.getDueDate()}`
+        detailsPopupDueDate.textContent = `Due Date: ${format(task.getDueDate(), 'MMMM dd, yyyy')}`
+        
+        
         detailsPopupPriority.textContent = `Priority: ${task.getPriority()}`
         detailsPopup.style.visibility = "visible";
         body.classList.add("popup");
@@ -79,7 +87,7 @@ function renderTasks(project) {
 
 
     const dueDate = document.createElement('p');
-    dueDate.textContent = task.getDueDate();
+    dueDate.textContent = format(task.getDueDate(), 'MMM dd, yyyy');
     taskItem.append(dueDate);
 
     //edit button
@@ -97,7 +105,7 @@ function renderTasks(project) {
 
       titleEdit.value=task.getTitle();
       descriptionEdit.value = task.getDescription()
-      dueDateEdit.value = task.getDueDate()
+      dueDateEdit.value = format(task.getDueDate(), 'yyyy-MM-dd')
       
       priorityRadios.forEach((radio) => {
         if (radio.value === task.getPriority()) {
@@ -132,6 +140,7 @@ function renderTasks(project) {
     
   });
 
+  
   taskAddButton.addEventListener('click', (e) => {
     submitEditForm.value = 'Add Task';
 

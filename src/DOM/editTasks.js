@@ -31,6 +31,7 @@ function editTasks(project) {
         project.tasks[activeTaskItem.getAttribute('data-index')].setPriority(radio.value);
       }
     })
+    localStorage.setItem('storedProjects', JSON.stringify(app.projects));
 
     renderTasks(project);
  
