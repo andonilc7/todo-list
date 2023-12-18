@@ -7,8 +7,8 @@ import parseISO from "date-fns/parseISO";
 app.projects = [];
 
 let storedProjects = JSON.parse(localStorage.getItem('storedProjects'));
-
-if (JSON.stringify(storedProjects) == '[]') {
+console.log(JSON.stringify(storedProjects))
+if ((JSON.stringify(storedProjects) == '[]') || storedProjects === null) {
   app.addProject('Home');
   localStorage.setItem('storedProjects', JSON.stringify(app.projects));
 } else {
