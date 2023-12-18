@@ -86,6 +86,10 @@ button:hover {
   margin-right: auto;
 }
 
+.complete-task-checkbox:hover {
+  cursor: pointer
+}
+
 .complete {
   color: grey;
   text-decoration: line-through;
