@@ -4,6 +4,7 @@ import { app } from "../app";
 import { editTasks } from "./editTasks";
 import elementFromHtml from "./elementFromHtml";
 import closeSvg from '../assets/window-close.svg'
+import plusCircleSvg from '../assets/plus-circle-outline.svg'
 
 const body = document.querySelector('body');
 
@@ -30,9 +31,20 @@ const pageLoad = function () {
   const sidebar = document.createElement('div');
   sidebar.classList.add('sidebar')
   content.append(sidebar);
+  const projectListTitle = document.createElement('h3');
+  projectListTitle.textContent = "Projects";
+  projectListTitle.classList.add('project-list-title')
+  sidebar.append(projectListTitle);
+
+  const projectListContainer = document.createElement('div');
+  projectListContainer.classList.add('project-list-container')
+  sidebar.append(projectListContainer)
+
   const projectList = document.createElement('div');
+  
   projectList.classList.add('project-list');
-  sidebar.append(projectList);
+  projectListContainer.append(projectList);
+
 
   let projectItemIndex=0;
   app.projects.forEach((project) => {
@@ -70,7 +82,7 @@ console.log(projectItemIndex)
      const addProjectBtn = document.createElement('button')
      addProjectBtn.classList.add('add-project-btn')
      addProjectBtn.textContent= 'Add Project' 
-     sidebar.append(addProjectBtn)
+     projectListContainer.append(addProjectBtn)
  
      addProjectBtn.addEventListener('click', (e, popup) => {
       localStorage.setItem('storedProjects', JSON.stringify(app.projects));
@@ -91,17 +103,38 @@ console.log(projectItemIndex)
     detailsPopupTitle.classList.add('details-popup-title')
     detailsPopup.append(detailsPopupTitle)
 
+    const detailsDescriptionCont = document.createElement('div');
+    detailsDescriptionCont.classList.add('details-category-cont');   
+    detailsPopup.append(detailsDescriptionCont); 
+    const detailsDescriptionLabel = document.createElement('p');
+    detailsDescriptionLabel.classList.add('details-popup-label');
+    detailsDescriptionLabel.textContent = "Description: "
+    detailsDescriptionCont.append(detailsDescriptionLabel)
     const detailsPopupDescription = document.createElement('p');
     detailsPopupDescription.classList.add('details-popup-description')
-    detailsPopup.append(detailsPopupDescription)
+    detailsDescriptionCont.append(detailsPopupDescription)
 
+    const detailsDueDateCont = document.createElement('div')
+    detailsDueDateCont.classList.add('details-category-cont')
+    detailsPopup.append(detailsDueDateCont);
+    const detailsDueDateLabel = document.createElement('p');
+    detailsDueDateLabel.classList.add('details-popup-label');
+    detailsDueDateLabel.textContent = 'Due Date: '
+    detailsDueDateCont.append(detailsDueDateLabel)
     const detailsPopupDueDate = document.createElement('p')
     detailsPopupDueDate.classList.add('details-popup-due-date')
-    detailsPopup.append(detailsPopupDueDate)
+    detailsDueDateCont.append(detailsPopupDueDate)
 
+    const detailsPriorityCont = document.createElement('div')
+    detailsPriorityCont.classList.add('details-category-cont')
+    detailsPopup.append(detailsPriorityCont)
+    const detailsPriorityLabel = document.createElement('p')
+    detailsPriorityLabel.textContent = 'Priority: '
+    detailsPriorityLabel.classList.add('details-popup-label')
+    detailsPriorityCont.append(detailsPriorityLabel)
     const detailsPopupPriority = document.createElement('p')
     detailsPopupPriority.classList.add('details-popup-priority')
-    detailsPopup.append(detailsPopupPriority)
+    detailsPriorityCont.append(detailsPopupPriority)
     
     //close details popup
       const closeDetails = document.createElement('img');
@@ -139,7 +172,7 @@ console.log(projectItemIndex)
      const newProjectNameContainer = document.createElement('div')
      addProjectForm.append(newProjectNameContainer)
      const projectNameLabel = document.createElement('label')
-     projectNameLabel.textContent = 'Project Name: '
+     projectNameLabel.textContent = 'Project Name'
      newProjectNameContainer.append(projectNameLabel)
 
      const projectNameInput = document.createElement('input')
@@ -148,6 +181,7 @@ console.log(projectItemIndex)
 
     //submit new project name
     const submitAddProjectForm = document.createElement('input')
+    submitAddProjectForm.classList.add('submit-add-project-form')
     submitAddProjectForm.type = "submit"
     submitAddProjectForm.value = "Confirm"
     addProjectForm.append(submitAddProjectForm)
@@ -193,9 +227,11 @@ console.log(projectItemIndex)
 
     const titleEditLabel = document.createElement('label')
     titleEditLabel.textContent = "Title: "
+    titleEditLabel.classList.add('edit-category-label')
     titleEditContainer.append(titleEditLabel)
 
     const titleEdit = document.createElement('textarea');
+    titleEdit.rows = "1"
     titleEdit.classList.add('title-edit')
     titleEdit.required = true;
     
@@ -207,9 +243,11 @@ console.log(projectItemIndex)
 
     const descEditLabel = document.createElement('label')
     descEditLabel.textContent = "Description: "
+    descEditLabel.classList.add('edit-category-label')
     descriptionEditContainer.append(descEditLabel)
 
     const descriptionEdit = document.createElement('textarea')
+    descriptionEdit.rows = "2"
     descriptionEdit.classList.add('description-edit')
     // descriptionEdit.value = task.getDescription();
     descriptionEditContainer.append(descriptionEdit);
@@ -219,6 +257,7 @@ console.log(projectItemIndex)
     editForm.append(dueEditCont)
 
     const dueEditLabel = document.createElement('label')
+    dueEditLabel.classList.add('edit-category-label')
     dueEditLabel.textContent = "Due Date: "
     dueEditCont.append(dueEditLabel)
 
@@ -236,6 +275,15 @@ console.log(projectItemIndex)
     const priorityLabel = document.createElement('div');
     priorityLabel.textContent = 'Priority: '
     priorityEditContainer.append(priorityLabel);
+    priorityEditContainer.id = 'priority-edit-container'
+
+    const priorityRadioContainer = document.createElement('div')
+    priorityEditContainer.append(priorityRadioContainer)
+    priorityRadioContainer.classList.add('priority-radio-container')
+
+    const lowContainer = document.createElement('div')
+    lowContainer.classList.add('low-container')
+    priorityRadioContainer.append(lowContainer)
 
     const lowRadio = document.createElement('input');
     lowRadio.setAttribute('type', 'radio')
@@ -243,12 +291,19 @@ console.log(projectItemIndex)
     lowRadio.setAttribute('id','low')
     lowRadio.setAttribute('value','low')
     lowRadio.classList.add('edit-radio')
-    priorityEditContainer.append(lowRadio)
+    lowContainer.append(lowRadio)
+
+    
+    
 
     const lowLabel = document.createElement('label')
     lowLabel.textContent="Low"
     lowLabel.setAttribute('for','low')
-    priorityEditContainer.append(lowLabel)
+    lowContainer.append(lowLabel)
+
+    const mediumContainer = document.createElement('div')
+    mediumContainer.classList.add('medium-container')
+    priorityEditContainer.append(mediumContainer)
 
     const mediumRadio = document.createElement('input');
     mediumRadio.setAttribute('type','radio')
@@ -256,12 +311,17 @@ console.log(projectItemIndex)
     mediumRadio.setAttribute('id','medium')
     mediumRadio.setAttribute('value','medium')
     mediumRadio.classList.add('edit-radio')
-    priorityEditContainer.append(mediumRadio)
+    mediumContainer.append(mediumRadio)
 
     const mediumLabel = document.createElement('label')
     mediumLabel.textContent = 'Medium'
     mediumLabel.setAttribute('for', 'medium')
-    priorityEditContainer.append(mediumLabel)
+    mediumContainer.append(mediumLabel)
+
+
+    const highContainer = document.createElement('div')
+    highContainer.classList.add('high-container')
+    priorityEditContainer.append(highContainer)
 
     const highRadio = document.createElement('input')
     highRadio.setAttribute('type','radio')
@@ -269,12 +329,12 @@ console.log(projectItemIndex)
     highRadio.setAttribute('id','high')
     highRadio.setAttribute('value','high')
     highRadio.classList.add('edit-radio')
-    priorityEditContainer.append(highRadio)
+    highContainer.append(highRadio)
 
     const highLabel = document.createElement('label')
     highLabel.textContent='High'
     highLabel.setAttribute('for', 'high')
-    priorityEditContainer.append(highLabel)
+    highContainer.append(highLabel)
 
 
     // submit button
@@ -338,17 +398,33 @@ console.log(projectItemIndex)
   projectDisplayTitle.classList.add('project-display-title');
   projectDisplay.append(projectDisplayTitle);
 
+  const taskDisplayContainer = document.createElement('div')
+  taskDisplayContainer.classList.add('task-display-container')
+  projectDisplay.append(taskDisplayContainer)
+
   const taskDisplay = document.createElement('div');
   taskDisplay.classList.add('task-display');
-  projectDisplay.append(taskDisplay);
+  taskDisplayContainer.append(taskDisplay);
 
   const taskAddContainer = document.createElement('div');
   taskAddContainer.classList.add('task-add-container');
-  projectDisplay.append(taskAddContainer)
+  taskDisplayContainer.append(taskAddContainer)
+
+  
+
+
   const taskAddButton = document.createElement('button');
   taskAddButton.classList.add('task-add-button');
-  taskAddButton.textContent = "Add Task"
   taskAddContainer.append(taskAddButton)
+  const taskAddCircle = document.createElement('img');
+  taskAddCircle.src = plusCircleSvg;
+  const taskAddSpan = document.createElement('span')
+  taskAddSpan.classList.add('task-add-span')
+  taskAddButton.append(taskAddSpan)
+  taskAddSpan.append(taskAddCircle)
+  const taskAddText = document.createElement('p')
+  taskAddText.textContent = "Add Task"
+  taskAddSpan.append(taskAddText)
 
   renderTasks(currentProject)
   

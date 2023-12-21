@@ -1,6 +1,7 @@
 import { renderTasks } from "./renderTasks";
 import { app } from "../app";
 import Project from "../projects";
+import parseISO from "date-fns/parseISO";
 
 export {handleAddTask}
 
@@ -29,7 +30,7 @@ function handleAddTask(project) {
 
   function submitAddFormClick() {
     if (titleEdit.value.length > 0 && dueDateEdit.value.length == 10 && getFormPriority !== undefined){
-      project.createAddTask(titleEdit.value, descriptionEdit.value, new Date(dueDateEdit.value), getFormPriority());
+      project.createAddTask(titleEdit.value, descriptionEdit.value, new Date(`${parseISO(dueDateEdit.value)}\n`), getFormPriority());
 
       localStorage.setItem('storedProjects', JSON.stringify(app.projects));
       renderTasks(project)

@@ -2,7 +2,9 @@ import { renderTasks, activeTaskItem } from "./renderTasks";
 import { app } from "../app";
 import Project from "../projects";
 import Task from "../tasks";
+import parseISO from "date-fns/parseISO";
 export {editTasks}
+
 
 function editTasks(project) {
   const editForm = document.querySelector('.edit-form')
@@ -24,7 +26,7 @@ function editTasks(project) {
   function submitEditFormClick(event) {
     project.tasks[activeTaskItem.getAttribute('data-index')].setTitle(titleEdit.value)
     project.tasks[activeTaskItem.getAttribute('data-index')].setDescription(descriptionEdit.value)
-    project.tasks[activeTaskItem.getAttribute('data-index')].setDueDate(dueDateEdit.value);
+    project.tasks[activeTaskItem.getAttribute('data-index')].setDueDate(new Date(`${parseISO(dueDateEdit.value)}\n`));
 
     priorityRadios.forEach((radio) => {
       if (radio.checked === true) {

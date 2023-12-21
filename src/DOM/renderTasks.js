@@ -6,6 +6,7 @@ import { deleteTask } from "./deleteTask";
 import { handleAddTask } from "./handleAddTask";
 import closeSvg from '../assets/window-close.svg'
 import { format } from "date-fns";
+import check from '../assets/check-circle.svg'
 
 let activeTaskItem;
 let taskToDelete;
@@ -41,20 +42,35 @@ function renderTasks(project) {
 
   let index = 0;
   project.tasks.forEach((task) => {
+    let checkboxName = `checkbox-${index}`
     const taskItem = document.createElement('div');
     taskItem.classList.add('task-item');
     taskItem.setAttribute('data-index', index);
     index++;
     taskDisplay.append(taskItem)
     
+    const completeContainer = document.createElement('div');
+    completeContainer.classList.add('complete-task-container')
+    taskItem.append(completeContainer);
     const complete = document.createElement('input');
+    complete.id = checkboxName
     complete.type = "checkbox";
     complete.classList.add('complete-task-checkbox')
-    taskItem.append(complete);
+    
+    
+
+    completeContainer.append(complete)
+    const completeLabel = document.createElement('label')
+    completeLabel.setAttribute('for', checkboxName);
+    completeLabel.classList.add('complete-task-label')
+    completeContainer.append(completeLabel)
+
     complete.addEventListener('change', function() {
       task.toggleComplete();
       taskTitle.classList.toggle('complete');
     })
+
+
 
     const taskTitle = document.createElement('p');
     taskTitle.textContent = task.getTitle();
@@ -70,11 +86,9 @@ function renderTasks(project) {
 
       details.addEventListener('click', function(e) {
         detailsPopupTitle.textContent = `${task.getTitle()}`
-        detailsPopupDescription.textContent = `Description: ${task.getDescription()}`
-        detailsPopupDueDate.textContent = `Due Date: ${format(task.getDueDate(), 'MMMM dd, yyyy')}`
-        
-        
-        detailsPopupPriority.textContent = `Priority: ${task.getPriority()}`
+        detailsPopupDescription.textContent = `${task.getDescription()}`
+        detailsPopupDueDate.textContent = `${format(task.getDueDate(), 'MMMM dd, yyyy')}`
+        detailsPopupPriority.textContent = `${task.getPriority()}`
         detailsPopup.style.visibility = "visible";
         body.classList.add("popup");
         
