@@ -360,11 +360,6 @@ textarea {
   margin-bottom: 9px;
 }
 
-
-#priority-edit-container {
-
-}
-
 .priority-radio-container {
   display: flex;
   flex-direction: row;
@@ -381,6 +376,12 @@ textarea {
 .medium-container > label,
 .high-container > label {
   margin-left: 9px;
+}
+
+.low-container > label:hover,
+.medium-container > label:hover,
+.high-container > label:hover {
+  cursor: pointer;
 }
 
 .title-edit,
