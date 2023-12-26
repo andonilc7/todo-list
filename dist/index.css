@@ -186,7 +186,7 @@ button:hover {
 
 
 .complete-task-checkbox:checked + .complete-task-label::before {
-  background-image: url(todo-list/dist/96fed0b6f4ffd9b99e71.svg);
+  background-image: url(./96fed0b6f4ffd9b99e71.svg);
   background-size: 22px 22px;
   background-position: center center;
   border-color: black;
@@ -432,7 +432,7 @@ label[for='high'] {
   width: 18px;
   height: 18px;
   border-radius: 100%;
-  background-image: url(todo-list/src/assets/radiobox-blank.svg);
+  background-image: url(../src/assets/radiobox-blank.svg);
   background-size: 22px 22px;
   background-position: center center;
   color: blue;
@@ -442,7 +442,7 @@ label[for='high'] {
 #low:checked + label[for='low']::before,
 #medium:checked + label[for='medium']::before,
 #high:checked + label[for='high']::before {
-  background-image: url(todo-list/src/assets/radiobox-marked.svg);
+  background-image: url(../src/assets/radiobox-marked.svg);
   background-size: 22px 22px;
   background-position: center center;
   color: blue;
