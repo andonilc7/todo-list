@@ -3,6 +3,7 @@ import { pageLoad } from "./DOM/pageLoad";
 import Project from "./projects";
 import Task from "./tasks";
 import parseISO from "date-fns/parseISO";
+import './index.css'
 
 app.projects = [];
 
